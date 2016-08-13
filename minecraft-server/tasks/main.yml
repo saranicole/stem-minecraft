@@ -1,0 +1,11 @@
+---
+# main tasks file for stem-minecraft
+- include_vars: "../vars/{{ provider }}/main.yml"
+
+- include: "{{ provider }}/required-facts-check.yml"
+
+- include: "{{ provider }}/provision.yml"
+  when: "{{ state=='present' }}"
+
+- include: "{{ provider }}/terminate.yml"
+  when: "{{ state=='absent' }}"

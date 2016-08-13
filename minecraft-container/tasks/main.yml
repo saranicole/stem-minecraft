@@ -1,0 +1,12 @@
+---
+# main tasks file for stem-minecraft
+- include: "{{ ansible_distribution }}/install-pip.yml"
+
+- include: prereqs.yml
+
+- include: provision-docker-deprecated.yml
+  when: "{{ ansible_version.full<2.1 }}"
+  failed_when: "{{ ansible_version.full<1.4 }}"
+
+- include: provision-docker.yml
+  when: "{{ ansible_version.full>=2.1 }}"

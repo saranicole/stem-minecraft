@@ -1,0 +1,37 @@
+---
+# provision tasks file for stem-minecraft
+
+- debug:
+    var: ssh_key_ids
+
+- include: get-image-id.yml
+  when: "{{ image_id is not defined }}"
+
+# Note that if droplet does exist ssh key id will not be added
+- name: Create droplet if id does not exist
+  digital_ocean:
+    state: present
+    command: droplet
+    name: "{{ droplet_name }}"
+    id: "{{ droplet_id }}"
+    api_token: "{{ api_token }}"
+    size_id: "{{ droplet_size }}"
+    ssh_key_ids: "[{{ ssh_key_ids }}]"
+    region_id: "{{ region }}"
+    image_id: "{{ image_id }}"
+    wait_timeout: 500
+
+  register: server_droplet
+
+- debug:
+    var: server_droplet
+
+- name: Add the instance to server group
+  add_host:
+      name: "{{ server_droplet.droplet.name }}"
+      groups: server
+      hostname: "{{ server_droplet.droplet.ip_address }}"
+      ansible_host:  "{{ server_droplet.droplet.ip_address }}"
+      ansible_user: root
+      ansible_become: true
+  no_log: True

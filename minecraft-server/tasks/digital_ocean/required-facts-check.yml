@@ -1,0 +1,9 @@
+---
+- name: Check for defined api token
+  fail: msg="api_token must be defined"
+  when: '{{ api_token is not defined }}'
+
+- name: Check for defined region
+  fail: msg="region must be defined"
+  when: '{{ region is not defined }}'
+

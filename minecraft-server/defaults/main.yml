@@ -1,0 +1,5 @@
+---
+# defaults file for stem-minecraft
+state: present
+
+provider: digital_ocean

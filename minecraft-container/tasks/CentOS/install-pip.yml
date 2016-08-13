@@ -1,0 +1,7 @@
+- name: Install python-pip
+  yum:
+    name: python-pip
+    update_cache: yes
+    state: latest
+  retries: 3
+  delay: 20

@@ -1,0 +1,23 @@
+---
+# get digital ocean images tasks file for stem-minecraft
+- debug:
+    var: image_name
+
+- name: Get digital ocean image by slug
+  uri:
+    url: "https://api.digitalocean.com/v2/images/{{ image_name }}"
+    method: GET
+    status_code: 200
+    HEADER_Authorization: "Bearer {{ api_token }}"
+    HEADER_Content-Type: application/json
+    return_content: yes
+  changed_when: True
+  retries: 3
+  delay: 10
+  register: image_output
+
+- debug:
+    var: image_output
+
+- set_fact:
+    image_id: image_output.image.id

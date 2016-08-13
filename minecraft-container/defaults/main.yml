@@ -1,0 +1,13 @@
+---
+# defaults file for stem-minecraft
+state: present
+
+container_name: minecraft
+minecraft_image_name: itzg/minecraft-server
+
+minecraft_internal_port: 25565
+minecraft_external_port: 25565
+
+volume_name: data
+
+include_minecraft_advanced_options: false

@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - role: minecraft-server
+      state: present
+
+- hosts: server
+  roles:
+    - role: minecraft-container
