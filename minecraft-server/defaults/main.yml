@@ -3,3 +3,5 @@
 state: present
 
 provider: digital_ocean
+
+delay: 5

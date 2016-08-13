@@ -10,3 +10,5 @@
 
 - include: provision-docker.yml
   when: "{{ ansible_version.full>=2.1 }}"
+
+- debug: msg="You can now connect to your server at {{ hostvars[inventory_hostname].ansible_host }}"

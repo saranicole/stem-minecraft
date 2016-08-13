@@ -13,5 +13,5 @@
     api_token: "{{ api_token }}"
   register: server_key
 
-- debug:
-    var: server_key
+- set_fact:
+    ssh_key_ids: "{{ server_key.ssh_key.id }}"

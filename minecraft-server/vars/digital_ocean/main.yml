@@ -9,8 +9,9 @@ droplet_size: 1gb
 image_id: "18008724"
 image_name: "docker"
 
+# SSH Key defaults
 path_to_ssh_public_key: "{{ lookup('env','DO_SSH_PATH') }}"
-ssh_key_ids: ""
+ssh_key_ids: False
 ssh_public_key_name: minecraft_key.pub
 ssh_remote_keyname: minecraft_key
 ssh_public_key: "{{ path_to_ssh_public_key }}/{{ ssh_public_key_name }}"

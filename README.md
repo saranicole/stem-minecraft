@@ -1,31 +1,50 @@
-Role Name
+Playbook Name
 =========
+stem-minecraft
 
-A brief description of the role goes here.
+Description
+------------
+Provisions an Ubuntu 14.04 Docker droplet on Digital Ocean, then runs the most excellent minecraft-server Docker container from itzg.  At the end it prints out a debug statement with your IP and voila! - you can connect to it using a Minecraft client.
+
+Note that in order to use Digital Ocean, you will first have to create an account and give your payment info.  Servers left up and running will cost you money!
+
+Credit to itzg, Docker image https://hub.docker.com/r/itzg/minecraft-server/
+
+Minecraft
+http://www.minecraft.net
+
+Digital Ocean
+https://cloud.digitalocean.com
+
+Created for DevOps Days Boston http://www.devopsdays.org/events/2016-boston/program/sara-jarjoura/
+Background at http://sarastreeter.com/2016/05/19/zero-to-devops-thru-minecraft/
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Install the requirements from the requirements.txt file:
+pip install -Ur requirements.txt
 
 Role Variables
 --------------
+You must set the environment variables with your Digital Ocean api token and region.  An example file
+is included "example-set-creds.sh".  You should also either specify the ssh key you already use
+for an existing droplet or create a new one locally using ssh-keygen so that the defaults set in
+/vars/digital_ocean/main.yml are accurate.  Make sure to specify the private key in your ansible-playbook command,
+or Ansible won't know how to connect.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Optionally pass in any of the variables provided in the itzg/minecraft docker image.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Optionally if you don't want to use the Digital Ocean-provided Docker Ubuntu image,
+you can also add in a docker installing role such as https://github.com/angstwad/docker.ubuntu
+by specifying it in the dependencies for minecraft-container.
 
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Examples
+------------
+ansible-playbook main.yml -e "OPS=my_minecraft_username LEVEL_TYPE=flat MODE=creative" --private-key=~/.ssh/minecraft_key
 
 License
 -------
@@ -34,5 +53,5 @@ BSD
 
 Author Information
 ------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Sara Jarjoura
+https://github.com/saranicole

@@ -1,11 +1,11 @@
 ---
 # provision tasks file for stem-minecraft
 
-- debug:
-    var: ssh_key_ids
-
 - include: get-image-id.yml
   when: "{{ image_id is not defined }}"
+
+- include: create-ssh-key.yml
+  when: "{{ not ssh_key_ids }}"
 
 # Note that if droplet does exist ssh key id will not be added
 - name: Create droplet if id does not exist
@@ -23,9 +23,6 @@
 
   register: server_droplet
 
-- debug:
-    var: server_droplet
-
 - name: Add the instance to server group
   add_host:
       name: "{{ server_droplet.droplet.name }}"
@@ -35,3 +32,12 @@
       ansible_user: root
       ansible_become: true
   no_log: True
+
+# Wait for ssh
+- name: Wait for ssh availability on host
+  local_action: "wait_for port=22 host={{ hostvars[groups.server.0].ansible_host }} search_regex=OpenSSH delay=1"
+  no_log: False
+
+- name: Delay tasks for newly created instances
+  pause:
+    seconds: "{{ delay }}"

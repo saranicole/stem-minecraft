@@ -1,12 +1,5 @@
 ---
 # provision tasks file for minecraft-container
-- name: Only use advanced Minecraft options if configured
-  set_fact:
-    MINECRAFT_OPTIONS:
-        EULA: TRUE
-        MODE: survival
-  when: "{{ not include_minecraft_advanced_options }}"
-
 - name: Create a container from the Minecraft image
   docker_container:
     name: "{{ container_name }}"
@@ -19,7 +12,3 @@
       - "{{ minecraft_internal_port }}:{{ minecraft_external_port }}"
     env:
       "{{ MINECRAFT_OPTIONS }}"
-  register: docker_output
-
-- debug:
-    var: docker_output

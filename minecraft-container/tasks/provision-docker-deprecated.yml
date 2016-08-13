@@ -1,10 +1,5 @@
 ---
 # provision tasks file for minecraft-container
-- name: Only use advanced Minecraft options if configured
-  set_fact:
-    MINECRAFT_OPTIONS: ""
-  when: "{{ not include_minecraft_advanced_options }}"
-
 - name: Create a container from the Minecraft image
   docker:
     name: "{{ container_name }}"
