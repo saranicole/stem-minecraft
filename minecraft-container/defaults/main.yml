@@ -10,4 +10,141 @@ minecraft_external_port: 25565
 
 volume_name: data
 
-include_minecraft_advanced_options: false
+# Minecraft options - see https://hub.docker.com/r/itzg/minecraft-server/
+# Only include if advanced options are desired
+# God bless this guy - look at all of them!
+
+# Whether you agree to the EULA
+EULA: TRUE
+
+# Game mode
+MODE: survival
+
+# DIFFICULTY - peaceful, easy, normal, and hard
+DIFFICULTY: easy
+
+# Whitelist Players - user1,user2
+WHITELIST: "{{ lookup('env','WHITELIST') }}"
+
+# OP/Administrator Players - user1,user2
+OPS: "{{ lookup('env','OPS_LIST') }}"
+
+# ICON - http://..../some/image.png
+ICON: "{{ lookup('env','ICON') }}"
+
+# Rcon
+ENABLE_RCON: false
+RCON_PASSWORD: "{{ lookup('env','RCON_PASSWORD') }}"
+RCON_PORT: 25575
+
+# Enabling this will enable the gamespy query protocol.
+QUERY_PORT: 25565
+ENABLE_QUERY: true
+
+# MAX_PLAYERS - maximum number of players
+MAX_PLAYERS: 20
+
+# MAX_WORLD_SIZE - maximum possible size in blocks,
+# expressed as a radius, that the world border can obtain
+MAX_WORLD_SIZE: 10000
+
+# ALLOW_NETHER - players to travel to the Nether
+ALLOW_NETHER: true
+
+# ANNOUNCE_PLAYER_ACHIEVEMENTS - announce when a player gets an achievement.
+ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+
+# ENABLE_COMMAND_BLOCK - Enables command blocks
+ENABLE_COMMAND_BLOCK: true
+
+# FORCE_GAMEMODE - Force players to join in the default game mode
+FORCE_GAMEMODE: false
+
+# GENERATE_STRUCTURES - Defines whether structures (such as villages) will be generated.
+GENERATE_STRUCTURES: true
+
+# HARDCORE - If set to true, players will be set to spectator mode if they die.
+HARDCORE: false
+
+# MAX_BUILD_HEIGHT - The maximum height in which building is allowed.
+MAX_BUILD_HEIGHT: 256
+
+# MAX_TICK_TIME - maximum number of milliseconds a single tick may take
+MAX_TICK_TIME: 60000
+
+# SPAWN_ANIMALS - Determines if animals will be spawned.
+SPAWN_ANIMALS: true
+
+# SPAWN_MONSTERS - Determines if monsters will be spawned.
+SPAWN_MONSTERS: true
+
+# SPAWN_NPCS - Determines if villagers will be spawned.
+SPAWN_NPCS: true
+
+# VIEW_DISTANCE - server-side viewing distance.
+VIEW_DISTANCE: 10
+
+# SEED - create the Minecraft level with a specific seed
+SEED:  ""
+
+# MOTD - message of the day
+MOTD: ""
+
+# PVP - By default, servers are created with player-vs-player (PVP) mode enabled
+PVP: true
+
+# LEVEL_TYPE - how the world is generated: DEFAULT, FLAT,
+# LARGEBIOMES, AMPLIFIED, CUSTOMIZED
+LEVEL_TYPE: DEFAULT
+
+# LEVEL - switch between world saves or run multiple containers with different saves
+LEVEL: ""
+
+# WORLD - specify the URL of a ZIP file containing an archived world
+WORLD: ""
+
+# MODPACK - URL of a "mod pack" to download and install into mods
+MODPACK: ""
+
+# ONLINE_MODE - allows you to disable the server from connecting for authentication
+ONLINE_MODE: TRUE
+
+# JVM_OPTS - adjust Java memory limit
+JVM_OPTS: "-Xmx1024M -Xms1024M"
+
+# Pass these all into one big map so it's more readable in the task
+MINECRAFT_OPTIONS:
+  EULA: "{{ EULA }}"
+  MODE: "{{ MODE }}"
+  DIFFICULTY: "{{ DIFFICULTY }}"
+  WHITELIST: "{{ WHITELIST }}"
+  OPS: "{{ OPS }}"
+  ICON: "{{ ICON }}"
+  ENABLE_RCON: "{{ ENABLE_RCON }}"
+  RCON_PASSWORD: "{{ RCON_PASSWORD }}"
+  RCON_PORT: "{{ RCON_PORT }}"
+  QUERY_PORT: "{{ QUERY_PORT }}"
+  ENABLE_QUERY: "{{ ENABLE_QUERY }}"
+  MAX_PLAYERS: "{{ MAX_PLAYERS }}"
+  MAX_WORLD_SIZE: "{{ MAX_WORLD_SIZE }}"
+  ALLOW_NETHER: "{{ ALLOW_NETHER }}"
+  ANNOUNCE_PLAYER_ACHIEVEMENTS: "{{ ANNOUNCE_PLAYER_ACHIEVEMENTS }}"
+  ENABLE_COMMAND_BLOCK: "{{ ENABLE_COMMAND_BLOCK }}"
+  FORCE_GAMEMODE: "{{ FORCE_GAMEMODE }}"
+  GENERATE_STRUCTURES: "{{ GENERATE_STRUCTURES }}"
+  HARDCORE: "{{ HARDCORE }}"
+  MAX_BUILD_HEIGHT: "{{ MAX_BUILD_HEIGHT }}"
+  MAX_TICK_TIME: "{{ MAX_TICK_TIME }}"
+  SPAWN_ANIMALS: "{{ SPAWN_ANIMALS }}"
+  SPAWN_MONSTERS: "{{ SPAWN_MONSTERS }}"
+  SPAWN_NPCS: "{{ SPAWN_NPCS }}"
+  VIEW_DISTANCE: "{{ VIEW_DISTANCE }}"
+  SEED:  "{{ SEED }}"
+  MOTD: "{{ MOTD }}"
+  PVP: "{{ PVP }}"
+  LEVEL_TYPE: "{{ LEVEL_TYPE }}"
+  LEVEL: "{{ LEVEL }}"
+  WORLD: "{{ WORLD }}"
+  MODPACK: "{{ MODPACK }}"
+  ONLINE_MODE: "{{ ONLINE_MODE }}"
+  JVM_OPTS: "{{ JVM_OPTS }}"
