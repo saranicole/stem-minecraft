@@ -12,6 +12,3 @@
       - "{{ minecraft_internal_port }}:{{ minecraft_external_port }}"
     env:
       "{{ MINECRAFT_OPTIONS }}"
-  register: docker_output
-
-- debug: msg="The following options were set for the Minecraft server: {{ docker_output.ansible_docker_container.Config.Env }}"
