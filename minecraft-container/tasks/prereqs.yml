@@ -1,3 +1,10 @@
+# Prerequisites for docker image
+- name: Verify Docker is started
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
 
 - name: Install docker-py
   pip:

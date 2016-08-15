@@ -8,9 +8,10 @@ droplet_size: 1gb
 # Defaults to Ubuntu Docker image
 image_id: "18008724"
 image_name: "docker"
+image_ssh_user: root
 
 # SSH Key defaults
-path_to_ssh_public_key: "{{ lookup('env','DO_SSH_PATH') }}"
+path_to_ssh_public_key: "{{ lookup('env','SSH_KEY_PATH) }}"
 ssh_key_ids: False
 ssh_public_key_name: minecraft_key.pub
 ssh_remote_keyname: minecraft_key

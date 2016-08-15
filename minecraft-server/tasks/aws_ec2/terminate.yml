@@ -1,0 +1,6 @@
+- name: Delete instance
+  ec2:
+    state: absent
+    instance_ids: "{{ instance_ids }}"
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"

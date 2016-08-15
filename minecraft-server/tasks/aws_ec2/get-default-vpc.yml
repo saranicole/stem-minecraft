@@ -1,0 +1,11 @@
+# Get vpc in availability zone
+- ec2_vpc_subnet_facts:
+    filters:
+      availability_zone: "{{ region }}*"
+  register: vpc_output
+
+- debug:
+    var: vpc_output
+
+- set_fact:
+    subnet_id: "{{ vpc_output.subnets.0.id }}"

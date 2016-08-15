@@ -1,0 +1,19 @@
+# Create a security group
+- name: Create security group if it does not exist
+  ec2_group:
+    state: present
+    name: "{{ security_group_name }}"
+    description: "{{ security_group_description }}"
+    rules: "{{ rules }}"
+    purge_rules: False
+    purge_rules_egress: False
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+    region: "{{ region }}"
+  register: security_group
+
+- debug:
+    var: security_group
+
+- set_fact:
+    security_group_id: "{{ security_group.group_id }}"

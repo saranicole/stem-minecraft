@@ -29,7 +29,7 @@
       groups: server
       hostname: "{{ server_droplet.droplet.ip_address }}"
       ansible_host:  "{{ server_droplet.droplet.ip_address }}"
-      ansible_user: root
+      ansible_user: "{{ image_ssh_user }}"
       ansible_become: true
   no_log: True
 

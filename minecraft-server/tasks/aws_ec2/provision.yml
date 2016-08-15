@@ -1,0 +1,73 @@
+---
+# provision tasks file for stem-minecraft
+
+# Optionally provision an SSH key
+- include: create-ssh-key.yml
+  when: "{{ do_create_key_pair }}"
+
+# Optionally provision a security group
+- include: create-security-group.yml
+  when: "{{ do_create_security_group }}"
+
+# Fetch the vpc subnet id unless it was specified
+- include: get-default-vpc.yml
+  when: "{{ not subnet_id }}"
+
+- name: Find ec2 instance by tags
+  ec2_remote_facts:
+    filters: "tag:{{ tag_key }}={{ tag_value }} instance-state-name=running"
+  register: ec2_instance
+
+- name: Create ec2 instance if it does not exist
+  ec2:
+    group_id:
+      - "{{ security_group_id }}"
+    instance_type: "{{ flavor }}"
+    instance_tags: "{{ tags }}"
+    wait_timeout: "{{ timeout }}"
+    image: "{{ image }}"
+    wait: true
+    region: "{{ region }}"
+    keypair: "{{ ssh_remote_keyname }}"
+    vpc_subnet_id: "{{ subnet_id }}"
+    assign_public_ip: yes
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+  when: "{{ ec2_instance.instances|length|int == 0 }}"
+  register: ec2_instance_out
+
+- debug: msg="ec2_instance"
+
+- debug:
+    var: ec2_instance
+
+- debug: msg="ec2_instance_out"
+
+- debug:
+    var: ec2_instance_out
+
+- set_fact:
+    ec2_instance: "{{ ec2_instance_out }}"
+  when: "{{ ec2_instance_out.skipped is not defined }}"
+
+- set_fact:
+    instance_ids: ec2_instance.instance_ids
+
+- name: Add the instance to server group
+  add_host:
+      name: "{{ ec2_instance.instances.0.tags.name }}"
+      groups: server
+      hostname: "{{ ec2_instance.instances.0.public_dns_name }}"
+      ansible_host:  "{{ ec2_instance.instances.0.public_dns_name }}"
+      ansible_user: "{{ image_ssh_user }}"
+      ansible_become: true
+  no_log: True
+
+# Wait for ssh
+- name: Wait for ssh availability on host
+  local_action: "wait_for port=22 host={{ hostvars[groups.server.0].ansible_host }} search_regex=OpenSSH delay=1"
+  no_log: False
+
+- name: Delay tasks for newly created instances
+  pause:
+    seconds: "{{ delay }}"

@@ -1,0 +1,13 @@
+---
+- name: Check for defined access key
+  fail: msg="access_key must be defined"
+  when: '{{ access_key is not defined }}'
+
+- name: Check for defined secret key
+  fail: msg="secret_key must be defined"
+  when: '{{ secret_key is not defined }}'
+
+- name: Check for defined region
+  fail: msg="region must be defined"
+  when: '{{ region is not defined }}'
+

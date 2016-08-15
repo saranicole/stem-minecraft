@@ -1,0 +1,47 @@
+- name: Update apt-get
+  command: apt-get update
+
+- debug: msg="{{ release_packages[ansible_distribution_release] }}"
+
+- name: Install release-specific dependencies
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: latest
+  retries: 3
+  delay: 20
+  with_items: "{{ release_packages[ansible_distribution_release] }}"
+
+- name: Install dependencies
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    state: latest
+  retries: 3
+  delay: 20
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
+- name: Install apt key
+  apt_key:
+    keyserver: "{{ apt_key_server }}"
+    id: "{{ apt_key_id }}"
+
+- name: Add Docker repository line
+  lineinfile:
+    dest: /etc/apt/sources.list.d/docker.list
+    regexp: "deb {{ docker_repo_url }} {{ ansible_distribution }}-{{ ansible_distribution_release }} main"
+    line: "deb {{ docker_repo_url }} {{ ansible_distribution }}-{{ ansible_distribution_release }} main"
+    state: present
+
+- name: Purge old repo
+  command: apt-get purge lxc-docker
+
+- name: Update apt-get again
+  command: apt-get update
+
+- name: "Ensure {{ image_ssh_user }} is part of the docker group"
+  user:
+    name: "{{ image_ssh_user }}"
+    group: docker

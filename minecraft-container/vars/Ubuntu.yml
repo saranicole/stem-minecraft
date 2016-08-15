@@ -1,0 +1,19 @@
+
+apt_key_server: keyserver.ubuntu.com
+apt_key_id: 36A1D7869245C8950F966E92D8576A8BA88D21E9
+
+docker_repo_url: 'https://apt.dockerproject.org/repo'
+
+# Release specific packages
+
+release_packages:
+  precise:
+    - linux-image-generic-lts-trusty
+    - apparmor
+  xenial:
+    - linux-image-extra-$(uname -r)
+  wily:
+    - linux-image-extra-$(uname -r)
+  trusty:
+    - linux-image-extra-$(uname -r)
+    - apparmor

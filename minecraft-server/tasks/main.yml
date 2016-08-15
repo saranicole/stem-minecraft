@@ -1,6 +1,6 @@
 ---
 # main tasks file for stem-minecraft
-- include_vars: "../vars/{{ provider }}/main.yml"
+- include_vars: "../vars/provider/{{ provider }}.yml"
 
 - include: "{{ provider }}/required-facts-check.yml"
 

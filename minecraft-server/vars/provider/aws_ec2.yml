@@ -1,0 +1,56 @@
+access_key: "{{ lookup('env','AWS_ACCESS_KEY') }}"
+secret_key: "{{ lookup('env','AWS_SECRET_KEY') }}"
+region: "{{ lookup('env','AWS_DEFAULT_REGION') }}"
+
+# Instance facts
+
+tag_key: name
+tag_value: minecraft
+tags: "{{ tag_key }}={{ tag_value }}"
+flavor: t2.micro
+timeout: 200
+
+# For termination
+instance_ids: False
+
+# Default image is ebs hvm public image "3E-ubuntu-14.04-docker-1.10.3.0"
+image: ami-cb44a8a6
+image_ssh_user: ec2-user
+
+# VPC
+subnet_id: False
+
+# SSH Key defaults
+path_to_ssh_public_key: "{{ lookup('env','SSH_KEY_PATH') }}"
+do_create_key_pair: False
+ssh_public_key_name: minecraft_key.pub
+ssh_remote_keyname: minecraft_key
+ssh_public_key: "{{ path_to_ssh_public_key }}/{{ ssh_public_key_name }}"
+ssh_public_key_contents: "{{ lookup('file', ssh_public_key, convert_data=False) }}"
+
+# Security group
+do_create_security_group: False
+security_group_name: default
+security_group_description: default
+security_group_id: False
+
+rules:
+  - proto: tcp
+    from_port: 80
+    to_port: 80
+    cidr_ip: 0.0.0.0/0
+  - proto: tcp
+    from_port: 22
+    to_port: 22
+    cidr_ip: 0.0.0.0/0
+  - proto: tcp
+    from_port: 443
+    to_port: 443
+    cidr_ip: 0.0.0.0/0
+  - proto: tcp
+    from_port: 25565
+    to_port: 25565
+    cidr_ip: 0.0.0.0/0
+rules_egress:
+  - proto: all
+    cidr_ip: 0.0.0.0/0
