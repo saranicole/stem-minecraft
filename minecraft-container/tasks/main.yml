@@ -2,8 +2,6 @@
 # main tasks file for stem-minecraft
 - include_vars: "../vars/{{ ansible_distribution }}.yml"
 
-- include: "{{ ansible_distribution }}/install.yml"
-
 - include: prereqs.yml
 
 - include: provision-docker.yml

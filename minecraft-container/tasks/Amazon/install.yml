@@ -1,5 +1,11 @@
+- name: Create Docker Repo
+  template:
+    src: docker.repo.j2
+    dest: /etc/yum.repos.d/docker.repo
+    force: yes
+
 - name: Update the cache
-  command: yum update
+  command: yum -y update
 
 - name: Install dependencies
   yum:
@@ -12,7 +18,12 @@
     - python-pip
     - docker-engine
 
+- debug:
+    var: image_ssh_user
+
 - name: "Ensure {{ image_ssh_user }} is part of the docker group"
   user:
     name: "{{ image_ssh_user }}"
     group: docker
+
+- debug: msg="after ensure docker user"

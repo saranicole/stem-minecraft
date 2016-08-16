@@ -1,2 +1,2 @@
-docker_repo_url: 'https://yum.dockerproject.org/repo/main/centos'
+docker_repo_url: 'https://yum.dockerproject.org/repo/main/centos/{{ ansible_distribution_major_version }}/'
 gpg_url: 'https://yum.dockerproject.org/gpg'

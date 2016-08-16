@@ -1,2 +1,2 @@
-docker_repo_url: 'https://yum.dockerproject.org/repo/main/centos'
+docker_repo_url: 'https://yum.dockerproject.org/repo/main/centos/6/'
 gpg_url: 'https://yum.dockerproject.org/gpg'

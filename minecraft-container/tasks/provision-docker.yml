@@ -1,11 +1,18 @@
 ---
 # provision tasks file for minecraft-container
+- name: Create Minecraft container volume
+  file:
+    path: "{{ ansible_env.HOME}}/{{ volume_name }}"
+    state: directory
+    mode: 0755
+    recurse: yes
+
 - name: Create a container from the Minecraft image
   docker_container:
     name: "{{ container_name }}"
     image: "{{ minecraft_image_name }}"
     volumes:
-      - "/{{ volume_name }}"
+      - "{{ ansible_env.HOME}}/{{ volume_name }}:/{{ volume_name }}"
     exposed_ports:
       - "{{ minecraft_external_port }}"
     published_ports:
