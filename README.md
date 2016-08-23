@@ -4,6 +4,18 @@ stem-minecraft
 
 Description
 ------------
+Provisions an Ubuntu 14.04 Docker droplet on Digital Ocean, then runs the most excellent minecraft-server Docker container from itzg.  At the end it prints out a debug statement with your IP and voila! - you can connect to it using a Minecraft client.
+
+Note that in order to use Digital Ocean, you will first have to create an account and give your payment info.  Servers left up and running will cost you money!
+
+Credit to itzg, Docker image https://hub.docker.com/r/itzg/minecraft-server/
+
+Minecraft
+http://www.minecraft.net
+
+Digital Ocean
+https://cloud.digitalocean.com
+
 Created for DevOps Days Boston http://www.devopsdays.org/events/2016-boston/program/sara-jarjoura/
 Background at http://sarastreeter.com/2016/05/19/zero-to-devops-thru-minecraft/
 
