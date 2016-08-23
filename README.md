@@ -13,6 +13,11 @@ Requirements
 Install the requirements from the requirements.txt file:
 pip install -Ur requirements.txt
 
+Screencast
+----------
+Asciinema
+[![asciicast](https://asciinema.org/a/2gojihwmv3k8urg2oujppe66q.png)](https://asciinema.org/a/2gojihwmv3k8urg2oujppe66q)
+
 Role Variables
 --------------
 You must set the environment variables with your Digital Ocean api token and region.  An example file
